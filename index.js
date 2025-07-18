@@ -15,7 +15,10 @@ const { chromium } = require('playwright');
   await page.getByTestId('sign-in-email-input').fill('j44128501@gmail.com');
   await page.getByTestId('sign-in-password-input').fill('lV+s+U$s101l');
   await page.getByTestId('sign-in-submit-button').click();
-  await page.getByTestId('v3-welcome-dialog-get-started').click();
+  const welcomeDialog = await page.locator('[data-testid="v3-welcome-dialog-get-started"]');
+if (await welcomeDialog.count() > 0) {
+    await welcomeDialog.click();
+}
   await page.getByRole('button', { name: 'Select voice -' }).click();
   await page.getByText('Crystal - Pleasant sultry').click();
   await page.getByTestId('tts-editor').locator('div').nth(1).click();
