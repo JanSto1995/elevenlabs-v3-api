@@ -19,8 +19,15 @@ const { chromium } = require('playwright');
 if (await welcomeDialog.count() > 0) {
     await welcomeDialog.click();
 }
-  await page.getByRole('button', { name: 'Select voice -' }).click();
-  await page.getByText('Crystal - Pleasant sultry').click();
+  const voiceButton = await page.locator('button:has-text("Select voice -")');
+
+if (await voiceButton.count() > 0) {
+    await voiceButton.first().click();
+    await page.getByText('Crystal - Pleasant sultry').click();
+} else {
+    console.log('Voice selection button not found. Skipping voice selection.');
+}
+
   await page.getByTestId('tts-editor').locator('div').nth(1).click();
   await page.locator('.tiptap').fill(myText);
   await page.getByRole('button', { name: 'Generate speech ⌘+Enter' }).click();
